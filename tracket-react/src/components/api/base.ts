@@ -1,15 +1,26 @@
-const makeTracketApiRequest = async (url: string, method: string = 'GET', data: any = undefined) => {
-    try {
-        const response = await fetch(
-            import.meta.env.VITE_TRACKET_API_URL + url, {
-            method, body: JSON.stringify(data)
-        });
+import { NoiseRequestParams, NoiseRequestParamsSchema } from "../../types/api";
 
-        const json = await response.json();
-        return json;
-    } catch (error: any) {
-        console.error(error.message);
+const makeTracketApiRequest = async (
+  endpoint: string,
+  params?: NoiseRequestParams
+) => {
+  let fullUrl = import.meta.env.VITE_TRACKET_API_URL + endpoint;
+
+  try {
+    if (params) {
+      const validationResult = NoiseRequestParamsSchema.parse(params);
+      const queryParams = new URLSearchParams(validationResult);
+      fullUrl = fullUrl.concat("?", queryParams.toString());
     }
-}
 
-export const getTracketApi = (url: string) => makeTracketApiRequest(url);
+    const response = await fetch(fullUrl, {
+      method: "GET",
+    });
+    const json = await response.json();
+    return json;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+};
+
+export const getTracketApi = (endpoint: string) => makeTracketApiRequest(endpoint);
