@@ -12,7 +12,7 @@ export const getLocations = async (
   const result = json as LocationsData;
   const locationsData: LocationsData = { locations: [] };
 
-  for await (const location of result.locations) {
+  for (const location of result.locations) {
     const validatedResult = LocationSchema.parse(location);
     locationsData.locations.push(validatedResult);
   }

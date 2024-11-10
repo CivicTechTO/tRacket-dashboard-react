@@ -33,3 +33,42 @@ export type Location = {
 export type LocationsData = {
   locations: Location[];
 };
+
+/**
+ * Noise measurement value.
+ */
+export type Noise = {
+  min: number;
+  max: number;
+  mean: number;
+};
+
+/**
+ * Point-in-time noise measurement value with timestamp.
+ */
+export type NoiseTimed = {
+  timestamp: string;
+} & Noise;
+
+/**
+ * Aggregate noise measurement corresponding to a time interval.
+ */
+export type NoiseAggregate = {
+  start?: Date;
+  end?: Date;
+  count: number;
+} & Noise;
+
+/**
+ * Timed location noise data.
+ */
+export type TimedLocationNoiseData = {
+  measurements: NoiseTimed[];
+};
+
+/**
+ * Aggregate noise data for a location.
+ */
+export type AggregateLocationNoiseData = {
+  measurements: NoiseAggregate[];
+};
