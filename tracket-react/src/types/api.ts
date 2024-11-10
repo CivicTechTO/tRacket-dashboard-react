@@ -40,3 +40,38 @@ function transformDateToString(date?: Date) {
   }
   return undefined;
 }
+
+/**
+ * Single location type.
+ */
+type Location = {
+  id: string;
+  label: string;
+  latitude: number;
+  longitude: number;
+  radius: number;
+  active: boolean;
+  latestTimestamp: string;
+};
+
+/**
+ * Locations data type.
+ */
+export type LocationsData = {
+  locations: Location[];
+};
+
+export const LocationSchema = z.object({
+  id: z.coerce.string(),
+  label: z.string(),
+  latitude: z.number(),
+  longitude: z.number(),
+  radius: z.number(),
+  active: z.boolean(),
+  latestTimestamp: z.string().transform((v) => {
+    if (v.startsWith("0000")) {
+      return "1892-01-03 01:11:00-04:00";
+    }
+    return v;
+  }),
+});

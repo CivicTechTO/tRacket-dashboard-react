@@ -3,7 +3,7 @@ import { NoiseRequestParams, NoiseRequestParamsSchema } from "../../types/api";
 const makeTracketApiRequest = async (
   endpoint: string,
   params?: NoiseRequestParams
-) => {
+): Promise<any> => {
   let fullUrl = import.meta.env.VITE_TRACKET_API_URL + endpoint;
 
   try {
@@ -23,4 +23,5 @@ const makeTracketApiRequest = async (
   }
 };
 
-export const getTracketApi = (endpoint: string) => makeTracketApiRequest(endpoint);
+export const getTracketApi = (endpoint: string) =>
+  makeTracketApiRequest(endpoint);
