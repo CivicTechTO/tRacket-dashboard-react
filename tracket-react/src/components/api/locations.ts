@@ -1,4 +1,5 @@
-import { LocationSchema, LocationsData } from "../../types/api";
+import { LocationsData } from "../../types/api";
+import { LocationSchema } from "../../validation/api";
 import { getTracketApi } from "./base";
 
 export const getLocations = async (

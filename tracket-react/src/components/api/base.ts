@@ -1,4 +1,5 @@
-import { NoiseRequestParams, NoiseRequestParamsSchema } from "../../types/api";
+import { NoiseRequestParams } from "../../types/api";
+import { NoiseRequestParamsSchema } from "../../validation/api";
 
 const makeTracketApiRequest = async (
   endpoint: string,
