@@ -9,8 +9,8 @@ export enum Granularity {
  */
 export type NoiseRequestParams = {
   granularity?: Granularity;
-  start?: Date;
-  end?: Date;
+  start?: string;
+  end?: string;
   page?: number;
 };
 
@@ -54,8 +54,8 @@ export type NoiseTimed = {
  * Aggregate noise measurement corresponding to a time interval.
  */
 export type NoiseAggregate = {
-  start?: Date;
-  end?: Date;
+  start?: string;
+  end?: string;
   count: number;
 } & Noise;
 

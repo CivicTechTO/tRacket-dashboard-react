@@ -1,7 +1,7 @@
 import { NoiseRequestParams } from "../../types/api";
 import { NoiseRequestParamsSchema } from "../../validation/api";
 
-const makeTracketApiRequest = async (
+export const makeTracketApiRequest = async (
   endpoint: string,
   params?: NoiseRequestParams
 ): Promise<any> => {
@@ -23,6 +23,3 @@ const makeTracketApiRequest = async (
     console.error(error.message);
   }
 };
-
-export const getTracketApi = (endpoint: string) =>
-  makeTracketApiRequest(endpoint);
