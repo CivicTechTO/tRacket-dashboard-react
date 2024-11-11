@@ -5,13 +5,14 @@ import {
   NoiseRequestParams,
   TimedLocationNoiseData,
 } from "../../types/api";
-import { LocationSchema } from "../../validation/api";
 import { makeTracketApiRequest } from "./base";
 
 export const getLocations = async (
-  locationID?: string
+  locationID?: number
 ): Promise<LocationsData> => {
-  const endpoint = locationID ? `/locations/${locationID}` : "/locations";
+  const endpoint = locationID
+    ? `/locations/${String(locationID)}`
+    : "/locations";
 
   const json = await makeTracketApiRequest(endpoint);
 
@@ -19,19 +20,27 @@ export const getLocations = async (
   const locationsData: LocationsData = { locations: [] };
 
   for (const location of result.locations) {
-    const validatedResult = LocationSchema.parse(location);
-    locationsData.locations.push(validatedResult);
+    const data = {
+      id: location.id,
+      label: location.label,
+      latitude: location.latitude,
+      longitude: location.longitude,
+      radius: location.radius,
+      active: location.active,
+      latestTimestamp: location.latestTimestamp,
+    };
+    locationsData.locations.push(data);
   }
 
   return locationsData;
 };
 
 export const getLocationNoiseData = async (
-  locationID: string,
+  locationID: number,
   params?: NoiseRequestParams
 ): Promise<AggregateLocationNoiseData | TimedLocationNoiseData> => {
   const MEASUREMENTS_KEY = "measurements";
-  const endpoint = `/locations/${locationID}/noise`;
+  const endpoint = `/locations/${String(locationID)}/noise`;
 
   let noiseData = await makeTracketApiRequest(endpoint, params);
 

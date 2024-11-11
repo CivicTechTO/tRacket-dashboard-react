@@ -1,5 +1,4 @@
 import { NoiseRequestParams } from "../../types/api";
-import { NoiseRequestParamsSchema } from "../../validation/api";
 
 export const makeTracketApiRequest = async (
   endpoint: string,
@@ -9,8 +8,10 @@ export const makeTracketApiRequest = async (
 
   try {
     if (params) {
-      const validationResult = NoiseRequestParamsSchema.parse(params);
-      const queryParams = new URLSearchParams(validationResult);
+      // @ts-ignore
+      // { page: <number> } incompatible with Record<string, string>
+      // But it's implicitly cast to a string
+      const queryParams = new URLSearchParams(params);
       fullUrl = fullUrl.concat("?", queryParams.toString());
     }
 

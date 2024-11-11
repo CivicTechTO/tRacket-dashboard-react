@@ -18,7 +18,7 @@ export type NoiseRequestParams = {
  * Single location type.
  */
 export type Location = {
-  id: string;
+  id: number;
   label: string;
   latitude: number;
   longitude: number;

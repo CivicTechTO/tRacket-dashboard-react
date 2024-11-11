@@ -7,7 +7,7 @@ import { makeTracketApiRequest } from "../src/components/api/base";
 import { Granularity, NoiseTimed } from "../src/types/api";
 
 describe("data loading operations", () => {
-  const V1_API_TEST_ID = "572250";
+  const V1_API_TEST_ID = 572250;
 
   describe("locations api", () => {
     test("/locations ", async () => {
@@ -16,7 +16,7 @@ describe("data loading operations", () => {
       const expected = {
         locations: expect.arrayContaining([
           {
-            id: expect.any(String),
+            id: expect.any(Number),
             label: expect.any(String),
             latitude: expect.any(Number),
             longitude: expect.any(Number),
