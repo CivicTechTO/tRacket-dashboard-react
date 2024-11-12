@@ -42,7 +42,7 @@ export const getLocationNoiseData = async (
   const MEASUREMENTS_KEY = "measurements";
   const endpoint = `/locations/${String(locationID)}/noise`;
 
-  let noiseData = await makeTracketApiRequest("GET", endpoint, params);
+  let noiseData = await makeTracketApiRequest("GET", endpoint, { params });
 
   const collectedNoiseData:
     | AggregateLocationNoiseData
@@ -60,7 +60,9 @@ export const getLocationNoiseData = async (
       paginateParams.page++;
     }
 
-    noiseData = await makeTracketApiRequest("GET", endpoint, paginateParams);
+    noiseData = await makeTracketApiRequest("GET", endpoint, {
+      params: paginateParams,
+    });
 
     collectedNoiseData[MEASUREMENTS_KEY] = [
       ...collectedNoiseData[MEASUREMENTS_KEY],

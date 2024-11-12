@@ -72,7 +72,9 @@ describe("data loading operations", () => {
 
     test("should return AggregateLocationNoiseData for life-time granularity", async () => {
       const result = await makeTracketApiRequest("GET", endpoint, {
-        granularity: Granularity.LifeTime,
+        params: {
+          granularity: Granularity.LifeTime,
+        },
       });
 
       expect(result.measurements).toHaveLength(1);
