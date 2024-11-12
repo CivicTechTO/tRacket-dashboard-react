@@ -7,6 +7,11 @@ import {
 } from "../../types/api";
 import { makeTracketApiRequest } from "./base";
 
+/**
+ * Get locations from the API.
+ * If ID is specified, then info for only one location is fetched.
+ * @param locationID
+ */
 export const getLocations = async (
   locationID?: number
 ): Promise<LocationsData> => {
@@ -35,6 +40,12 @@ export const getLocations = async (
   return locationsData;
 };
 
+/**
+ * Get noise data for a location.
+ * Loading is paginated by default unless caller provides explicit page.
+ * @param locationID
+ * @param params
+ */
 export const getLocationNoiseData = async (
   locationID: number,
   params?: NoiseRequestParams
@@ -77,6 +88,11 @@ export const getLocationNoiseData = async (
   }
 };
 
+/**
+ * Decide if the API request should be paginated and set up the params accordingly.
+ * Only paginate if the user did not provide params or page and if it's not an aggregate call.
+ * @param params
+ */
 export const checkPaginate = (
   params?: NoiseRequestParams
 ): { paginateParams: NoiseRequestParams; paginate: boolean } => {
