@@ -56,7 +56,7 @@ describe("data loading operations", () => {
     const endpoint = `/locations/${V1_API_TEST_ID}/noise`;
 
     test("should return TimedLocationNoiseData for default params", async () => {
-      const result = await makeTracketApiRequest(endpoint);
+      const result = await makeTracketApiRequest("GET", endpoint);
 
       expect(result.measurements?.length).toBeGreaterThan(0);
 
@@ -71,7 +71,7 @@ describe("data loading operations", () => {
     });
 
     test("should return AggregateLocationNoiseData for life-time granularity", async () => {
-      const result = await makeTracketApiRequest(endpoint, {
+      const result = await makeTracketApiRequest("GET", endpoint, {
         granularity: Granularity.LifeTime,
       });
 

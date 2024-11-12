@@ -1,3 +1,5 @@
+export type HTTP_METHODS = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+
 export enum Granularity {
   Raw = "raw",
   Hourly = "hourly",

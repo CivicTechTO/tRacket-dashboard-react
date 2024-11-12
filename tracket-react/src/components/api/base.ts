@@ -1,6 +1,7 @@
-import { NoiseRequestParams } from "../../types/api";
+import { HTTP_METHODS, NoiseRequestParams } from "../../types/api";
 
 export const makeTracketApiRequest = async (
+  method: HTTP_METHODS,
   endpoint: string,
   params?: NoiseRequestParams
 ): Promise<any> => {
@@ -16,7 +17,7 @@ export const makeTracketApiRequest = async (
     }
 
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method,
     });
     const json = await response.json();
     return json;
