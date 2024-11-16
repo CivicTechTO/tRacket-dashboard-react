@@ -1,16 +1,16 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test } from "vitest";
 import {
   getLocationNoiseData,
   getLocations,
-} from '../src/components/api/locations';
-import { makeTracketApiRequest } from '../src/components/api/base';
-import { Granularity, NoiseTimed } from '../src/types/api';
+} from "../src/components/api/locations";
+import { makeTracketApiRequest } from "../src/components/api/base";
+import { Granularity, NoiseTimed } from "../src/types/api";
 
-describe('data loading operations', () => {
+describe("data loading operations", () => {
   const V1_API_TEST_ID = 572250;
 
-  describe('locations api', () => {
-    test('/locations ', async () => {
+  describe("locations api", () => {
+    test("/locations ", async () => {
       const result = await getLocations();
 
       const expected = {
@@ -30,7 +30,7 @@ describe('data loading operations', () => {
       expect(result).toEqual(expected);
     });
 
-    test('/locations/:location-id', async () => {
+    test("/locations/:location-id", async () => {
       const result = await getLocations(V1_API_TEST_ID);
 
       const expected = {
@@ -52,11 +52,11 @@ describe('data loading operations', () => {
     });
   });
 
-  describe('/locations/:location-id/noise with plain request', () => {
+  describe("/locations/:location-id/noise with plain request", () => {
     const endpoint = `/locations/${V1_API_TEST_ID}/noise`;
 
-    test('should return TimedLocationNoiseData for default params', async () => {
-      const result = await makeTracketApiRequest('GET', endpoint);
+    test("should return TimedLocationNoiseData for default params", async () => {
+      const result = await makeTracketApiRequest("GET", endpoint);
 
       expect(result.measurements?.length).toBeGreaterThan(0);
 
@@ -70,8 +70,8 @@ describe('data loading operations', () => {
       });
     });
 
-    test('should return AggregateLocationNoiseData for life-time granularity', async () => {
-      const result = await makeTracketApiRequest('GET', endpoint, {
+    test("should return AggregateLocationNoiseData for life-time granularity", async () => {
+      const result = await makeTracketApiRequest("GET", endpoint, {
         params: {
           granularity: Granularity.LifeTime,
         },
@@ -92,8 +92,8 @@ describe('data loading operations', () => {
     });
   });
 
-  describe('/locations/:location-id/noise with noise api', () => {
-    test('should return TimedLocationNoiseData with pagination', async () => {
+  describe("/locations/:location-id/noise with noise api", () => {
+    test("should return TimedLocationNoiseData with pagination", async () => {
       const result = await getLocationNoiseData(V1_API_TEST_ID, {
         page: 1,
       });
@@ -109,7 +109,7 @@ describe('data loading operations', () => {
         });
       });
     });
-    test('should return TimedLocationNoiseData for hourly granularity with pagination', async () => {
+    test("should return TimedLocationNoiseData for hourly granularity with pagination", async () => {
       const result = await getLocationNoiseData(V1_API_TEST_ID, {
         granularity: Granularity.Hourly,
         page: 1,
@@ -127,7 +127,7 @@ describe('data loading operations', () => {
       });
     });
 
-    test('should return AggregateLocationNoiseData for life-time granularity', async () => {
+    test("should return AggregateLocationNoiseData for life-time granularity", async () => {
       const result = await getLocationNoiseData(V1_API_TEST_ID, {
         granularity: Granularity.LifeTime,
       });

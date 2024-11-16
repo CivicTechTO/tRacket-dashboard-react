@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { HTTP_METHODS, NoiseRequestParams } from '../../types/api';
+import { HTTP_METHODS, NoiseRequestParams } from "../../types/api";
 
 /**
  * Data loader from WebCOMAND API v1.
@@ -21,25 +19,26 @@ export const makeTracketApiRequest = async (
 
   try {
     if (data && data.params) {
-      // @ts-expect-error { page: <number> } incompatible with Record<string, string>
+      // @ts-ignore
+      // { page: <number> } incompatible with Record<string, string>
       // But it's implicitly cast to a string
       const queryParams = new URLSearchParams(data.params);
-      fullUrl = fullUrl.concat('?', queryParams.toString());
+      fullUrl = fullUrl.concat("?", queryParams.toString());
     }
 
     const requestOptions: RequestInit = {
       method,
       headers: {
-        Accept: 'application/json',
+        Accept: "application/json",
       },
     };
 
-    if (data && data.payload && method !== 'GET') {
+    if (data && data.payload && method !== "GET") {
       requestOptions.body = JSON.stringify(data.payload);
 
       requestOptions.headers = {
         ...requestOptions.headers,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       };
     }
     const response = await fetch(fullUrl, requestOptions);
