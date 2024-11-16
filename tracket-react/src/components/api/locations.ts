@@ -4,8 +4,8 @@ import {
   LocationsData,
   NoiseRequestParams,
   TimedLocationNoiseData,
-} from "../../types/api";
-import { makeTracketApiRequest } from "./base";
+} from '../../types/api';
+import { makeTracketApiRequest } from './base';
 
 /**
  * Get locations from the API.
@@ -17,9 +17,9 @@ export const getLocations = async (
 ): Promise<LocationsData> => {
   const endpoint = locationID
     ? `/locations/${String(locationID)}`
-    : "/locations";
+    : '/locations';
 
-  const json = await makeTracketApiRequest("GET", endpoint);
+  const json = await makeTracketApiRequest('GET', endpoint);
 
   const result = json as LocationsData;
   const locationsData: LocationsData = { locations: [] };
@@ -50,10 +50,10 @@ export const getLocationNoiseData = async (
   locationID: number,
   params?: NoiseRequestParams
 ): Promise<AggregateLocationNoiseData | TimedLocationNoiseData> => {
-  const MEASUREMENTS_KEY = "measurements";
+  const MEASUREMENTS_KEY = 'measurements';
   const endpoint = `/locations/${String(locationID)}/noise`;
 
-  let noiseData = await makeTracketApiRequest("GET", endpoint, { params });
+  let noiseData = await makeTracketApiRequest('GET', endpoint, { params });
 
   const collectedNoiseData:
     | AggregateLocationNoiseData
@@ -71,7 +71,7 @@ export const getLocationNoiseData = async (
       paginateParams.page++;
     }
 
-    noiseData = await makeTracketApiRequest("GET", endpoint, {
+    noiseData = await makeTracketApiRequest('GET', endpoint, {
       params: paginateParams,
     });
 
