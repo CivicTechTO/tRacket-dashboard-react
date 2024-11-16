@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { HTTP_METHODS, NoiseRequestParams } from "../../types/api";
 
 /**
@@ -19,8 +21,7 @@ export const makeTracketApiRequest = async (
 
   try {
     if (data && data.params) {
-      // @ts-ignore
-      // { page: <number> } incompatible with Record<string, string>
+      // @ts-expect-error { page: <number> } incompatible with Record<string, string>
       // But it's implicitly cast to a string
       const queryParams = new URLSearchParams(data.params);
       fullUrl = fullUrl.concat("?", queryParams.toString());
