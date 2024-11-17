@@ -1,9 +1,4 @@
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Tooltip,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import {
   LAYER_ATTRIBUTION,
@@ -14,18 +9,19 @@ import {
 } from "../../config";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { useEffect, useState } from "react";
-import { getLocations } from "../api/locations";
-import { type Location } from "../../types/api";
+import { formatLocations, getLocations } from "../api/locations";
+import { type LocationFormatted } from "../../types/api";
 import { type LatLngTuple } from "leaflet";
 
 const Map = () => {
-  const [locations, setLocations] = useState<Location[]>([]);
+  const [locations, setLocations] = useState<LocationFormatted[]>([]);
 
   useEffect(() => {
     const fetchLocations = async () => {
       try {
         const result = await getLocations();
-        setLocations(result.locations);
+        const formattedLocations = formatLocations(result.locations);
+        setLocations(formattedLocations);
       } catch (err: unknown) {
         console.error(err);
       }
@@ -35,13 +31,17 @@ const Map = () => {
   }, []);
 
   return (
-    <MapContainer center={[MAP_CENTER_LAT, MAP_CENTER_LON]} zoom={ZOOM}  zoomControl={true}>
+    <MapContainer
+      center={[MAP_CENTER_LAT, MAP_CENTER_LON]}
+      zoom={ZOOM}
+      zoomControl={true}
+    >
       <TileLayer url={LAYER_URL} attribution={LAYER_ATTRIBUTION} />
 
       <MarkerClusterGroup>
         {locations.map((l) => {
           const position: LatLngTuple = [l.latitude, l.longitude];
-          const toolTipActive = l.active
+          const toolTipActive = l.isSendingData
             ? "Active Location"
             : "Inactive Location";
           const toolTipLabel = l.label || "";
