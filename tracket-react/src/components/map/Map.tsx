@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { formatLocations, getLocations } from "../api/locations";
 import { type LocationFormatted } from "../../types/api";
 import { divIcon, type MarkerCluster, type LatLngTuple, point } from "leaflet";
+import CustomTooltip from "./CustomTooltip";
 
 const Map = () => {
   const [locations, setLocations] = useState<LocationFormatted[]>([]);
@@ -51,10 +52,10 @@ const Map = () => {
       <MarkerClusterGroup iconCreateFunction={createCustomClusterFn}>
         {locations.map((l) => {
           const position: LatLngTuple = [l.latitude, l.longitude];
-          const toolTipActive = l.isSendingData
+          const activeStatus = l.isSendingData
             ? "Active Location"
             : "Inactive Location";
-          const toolTipLabel = l.label || "";
+          const locationLabel = l.label || "";
 
           const markerColor = l.isSendingData
             ? MARKER_COLOR_HIGHLIGHT
@@ -71,13 +72,10 @@ const Map = () => {
               opacity={0.5}
               weight={2}
             >
-              <Tooltip>
-                <div>
-                  <b>{toolTipActive}</b>
-                  <br></br>
-                  {toolTipLabel}
-                </div>
-              </Tooltip>
+              <CustomTooltip
+                activeStatus={activeStatus}
+                locationLabel={locationLabel}
+              />
             </CircleMarker>
           );
         })}
