@@ -1,5 +1,5 @@
-import { Tooltip } from "react-leaflet";
-import { CustomTooltipProps } from "../../types/components";
+import { Tooltip } from 'react-leaflet';
+import { CustomTooltipProps } from '../../types/components';
 
 const CustomTooltip = ({ activeStatus, locationLabel }: CustomTooltipProps) => {
   return (
