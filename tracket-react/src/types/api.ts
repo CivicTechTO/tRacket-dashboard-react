@@ -29,6 +29,8 @@ export type Location = {
   latestTimestamp: string;
 };
 
+export type LocationFormatted = Location & { isSendingData: boolean };
+
 /**
  * Locations data type.
  */

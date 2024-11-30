@@ -1,10 +1,13 @@
 import {
   AggregateLocationNoiseData,
   Granularity,
+  Location,
+  LocationFormatted,
   LocationsData,
   NoiseRequestParams,
   TimedLocationNoiseData,
 } from "../../types/api";
+import { getActiveTimeLimit } from "../../utils";
 import { makeTracketApiRequest } from "./base";
 
 /**
@@ -111,4 +114,26 @@ export const checkPaginate = (
   }
 
   return { paginateParams: params, paginate };
+};
+
+export const formatLocations = (locations: Location[]): LocationFormatted[] => {
+  return locations.map((location) => {
+    const formattedLocations: LocationFormatted = {
+      ...location,
+      isSendingData: setSendingDataFlag(location.latestTimestamp),
+    };
+    // TODO: format based on filterActive or deduplicate tags
+    return formattedLocations;
+  });
+};
+
+/**
+ * Based on the lastest timestamp, check if device has been sending data recently.
+ * @param timestamp Timestamp property fetched from the locations API
+ */
+export const setSendingDataFlag = (timestamp: string) => {
+  const timestampDate = new Date(timestamp);
+  const limit = getActiveTimeLimit();
+
+  return timestampDate.getTime() > limit.getTime();
 };
