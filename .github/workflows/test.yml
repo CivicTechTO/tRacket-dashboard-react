@@ -5,6 +5,11 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./tracket-react
+
     steps:
       - uses: actions/checkout@v4
 
@@ -15,9 +20,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./tracket-react
+
+      - name: Lint
+        run: npm run lint
 
       - name: Test with vitest
         run: npm test
-        working-directory: ./tracket-react
-
