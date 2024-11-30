@@ -1,16 +1,16 @@
-import { MapContainer, TileLayer } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 import {
   LAYER_ATTRIBUTION,
   LAYER_URL,
   MAP_CENTER_LAT,
   MAP_CENTER_LON,
   ZOOM,
-} from "../../config";
-import { useEffect, useState } from "react";
-import { formatLocations, getLocations } from "../api/locations";
-import { type LocationFormatted } from "../../types/api";
-import CustomMarkerClusterGroup from "./CustomMarkerClusterGroup";
+} from '../../config';
+import { useEffect, useState } from 'react';
+import { formatLocations, getLocations } from '../api/locations';
+import { type LocationFormatted } from '../../types/api';
+import CustomMarkerClusterGroup from './CustomMarkerClusterGroup';
 
 const Map = () => {
   const [locations, setLocations] = useState<LocationFormatted[]>([]);
