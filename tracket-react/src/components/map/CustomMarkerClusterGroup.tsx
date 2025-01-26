@@ -9,12 +9,15 @@ import {
 } from "../../config";
 import { CircleMarker } from "react-leaflet";
 import CustomTooltip from "./CustomTooltip";
+import { useNavigate } from "react-router";
 
 const CustomMarkerClusterGroup = ({
   locations,
 }: {
   locations: LocationFormatted[];
 }) => {
+  const navigate = useNavigate();
+
   function createCustomClusterFn(cluster: MarkerCluster) {
     const count = cluster.getChildCount();
 
@@ -48,6 +51,11 @@ const CustomMarkerClusterGroup = ({
             color={MARKER_BORDER_COLOR}
             opacity={0.5}
             weight={2}
+            eventHandlers={{
+              click: () => {
+                navigate(`/location/${l.id}`);
+              },
+            }}
           >
             <CustomTooltip
               activeStatus={activeStatus}

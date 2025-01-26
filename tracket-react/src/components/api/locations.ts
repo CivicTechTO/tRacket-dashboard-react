@@ -70,7 +70,7 @@ export const getLocationNoiseData = async (
   const { paginateParams, paginate } = checkPaginate(params);
 
   while (paginate && noiseData[MEASUREMENTS_KEY].length > 0) {
-    if (paginateParams.page) {
+    if (paginateParams.page !== undefined) {
       paginateParams.page++;
     }
 
