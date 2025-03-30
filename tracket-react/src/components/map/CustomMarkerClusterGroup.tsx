@@ -6,10 +6,10 @@ import {
   MARKER_COLOR_HIGHLIGHT,
   MARKER_COLOR_INACTIVE,
   RADIUS_PIXEL,
-} from "../../config";
-import { CircleMarker } from "react-leaflet";
-import CustomTooltip from "./CustomTooltip";
-import { useNavigate } from "react-router";
+} from '../../config';
+import { CircleMarker } from 'react-leaflet';
+import CustomTooltip from './CustomTooltip';
+import { useNavigate } from 'react-router';
 
 const CustomMarkerClusterGroup = ({
   locations,
@@ -55,8 +55,7 @@ const CustomMarkerClusterGroup = ({
               click: () => {
                 navigate(`/location/${l.id}`);
               },
-            }}
-          >
+            }}>
             <CustomTooltip
               activeStatus={activeStatus}
               locationLabel={locationLabel}

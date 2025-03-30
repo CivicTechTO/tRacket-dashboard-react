@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { getLocationNoiseData, getLocations } from "../api/locations";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import { getLocationNoiseData, getLocations } from '../api/locations';
 import {
   Location,
   TimedLocationNoiseData,
   Granularity,
   NoiseTimed,
-} from "../../types/api";
-import { CheckCircleIcon, NoSymbolIcon } from "@heroicons/react/24/solid";
-import dayjs from "dayjs";
-import { Circle, MapContainer, TileLayer, Tooltip } from "react-leaflet";
-import { LAYER_ATTRIBUTION, LAYER_URL } from "../../config";
+} from '../../types/api';
+import { CheckCircleIcon, NoSymbolIcon } from '@heroicons/react/24/solid';
+import dayjs from 'dayjs';
+import { Circle, MapContainer, TileLayer, Tooltip } from 'react-leaflet';
+import { LAYER_ATTRIBUTION, LAYER_URL } from '../../config';
 import {
   Area,
   CartesianGrid,
@@ -18,9 +18,9 @@ import {
   Line,
   ResponsiveContainer,
   XAxis,
-} from "recharts";
+} from 'recharts';
 
-const dateFormat = "YYYY-MM-DD HH:mm:ss";
+const dateFormat = 'YYYY-MM-DD HH:mm:ss';
 
 const makeHue = (noiseValue: number) => {
   const noiseValueScaled = (noiseValue - 35) / 15;
@@ -39,24 +39,23 @@ const NoiseMeterChart = ({
   noiseValue: number;
   showTicks?: boolean;
 }) => (
-  <div className="w-full">
+  <div className='w-full'>
     {showTicks && (
-      <div className="flex justify-between">
-        <span className="text-sm">30 dB</span>
-        <span className="text-sm">80 dB</span>
+      <div className='flex justify-between'>
+        <span className='text-sm'>30 dB</span>
+        <span className='text-sm'>80 dB</span>
       </div>
     )}
     <svg
-      viewBox="0 0 100 4"
-      style={{ width: "100%", height: "6px" }}
-      preserveAspectRatio="none"
-    >
-      <rect x="0" y="0" width="100" height="6" fill="lightgray" />
+      viewBox='0 0 100 4'
+      style={{ width: '100%', height: '6px' }}
+      preserveAspectRatio='none'>
+      <rect x='0' y='0' width='100' height='6' fill='lightgray' />
       <rect
-        x="0"
-        y="0"
+        x='0'
+        y='0'
         width={((noiseValue - 30) / 50) * 100}
-        height="4"
+        height='4'
         fill={`hsl(${makeHue(noiseValue)}, 100%, 50%)`}
       />
     </svg>
@@ -65,19 +64,17 @@ const NoiseMeterChart = ({
 
 const MapView = ({ location }: { location: Location }) => {
   return (
-    <div className="w-1/3 h-full p-8 shadow-log rounded-xl">
+    <div className='w-1/3 h-full p-8 shadow-log rounded-xl'>
       <MapContainer
-        style={{ height: "100%", width: "100%", borderRadius: "1rem" }}
+        style={{ height: '100%', width: '100%', borderRadius: '1rem' }}
         center={[location.latitude, location.longitude]}
         zoom={20}
         scrollWheelZoom={false}
-        dragging={false}
-      >
+        dragging={false}>
         <TileLayer url={LAYER_URL} attribution={LAYER_ATTRIBUTION} />
         <Circle
           center={[location.latitude, location.longitude]}
-          radius={location.radius}
-        >
+          radius={location.radius}>
           <span>{location.label}</span>
         </Circle>
       </MapContainer>
@@ -86,19 +83,19 @@ const MapView = ({ location }: { location: Location }) => {
 };
 
 const LocationDetails = ({ location }: { location: Location }) => (
-  <div className="w-content">
+  <div className='w-content'>
     <h1>{location.label}</h1>
-    <div className="flex items-center">
+    <div className='flex items-center'>
       {location.active ? (
-        <CheckCircleIcon className="h-6 w-6 text-green-500" />
+        <CheckCircleIcon className='h-6 w-6 text-green-500' />
       ) : (
-        <NoSymbolIcon className="h-6 w-6 text-red-500" />
+        <NoSymbolIcon className='h-6 w-6 text-red-500' />
       )}
-      <span className="text-sm ml-2">
-        {location.active ? "Active" : "Inactive"}
+      <span className='text-sm ml-2'>
+        {location.active ? 'Active' : 'Inactive'}
       </span>
       {location.active && (
-        <span className="text-sm text-gray-500 ml-5">
+        <span className='text-sm text-gray-500 ml-5'>
           Last updated: {dayjs(location.latestTimestamp).format(dateFormat)}
         </span>
       )}
@@ -116,19 +113,18 @@ const NoiseChart = ({ measurements }: { measurements: NoiseTimed[] }) => (
           timestamp: dayjs(measurement.timestamp).valueOf(),
         })) || []
       }
-      margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
-    >
-      <Line type="monotone" dataKey="mean" stroke="#8884d8" dot={false} />
-      <Area type="monotone" dataKey="minMax" stroke="#8884d8" fill="#8884d8" />
-      <CartesianGrid stroke="#ccc" />
+      margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+      <Line type='monotone' dataKey='mean' stroke='#8884d8' dot={false} />
+      <Area type='monotone' dataKey='minMax' stroke='#8884d8' fill='#8884d8' />
+      <CartesianGrid stroke='#ccc' />
       <XAxis
-        dataKey="timestamp"
+        dataKey='timestamp'
         ticks={[...Array(3).keys()].map((i) =>
           dayjs(
             measurements[Math.floor(measurements.length / 3 - 1) * i].timestamp
           ).valueOf()
         )}
-        tickFormatter={(time) => dayjs(time).format("YYYY-MM-DD HH:mm")}
+        tickFormatter={(time) => dayjs(time).format('YYYY-MM-DD HH:mm')}
       />
       <Tooltip />
     </ComposedChart>
@@ -144,7 +140,7 @@ const NoiseData = ({
 }) => {
   if (!noiseData || !rawNoiseData) {
     return (
-      <div className="w-2/3 flex justify-center items-center">Loading...</div>
+      <div className='w-2/3 flex justify-center items-center'>Loading...</div>
     );
   }
 
@@ -186,61 +182,61 @@ const NoiseData = ({
     last7daysNight.length;
 
   return (
-    <div className="w-2/3 p-4">
-      <div className="w-full flex gap-4">
-        <div className="w-1/3 flex justify-between bg-white rounded-xl p-4 shadow-lg mb-5">
-          <div className="w-full p-4">
+    <div className='w-2/3 p-4'>
+      <div className='w-full flex gap-4'>
+        <div className='w-1/3 flex justify-between bg-white rounded-xl p-4 shadow-lg mb-5'>
+          <div className='w-full p-4'>
             <h2>
-              <span className="font-medium text-xl mr-2">Last Hour</span>{" "}
+              <span className='font-medium text-xl mr-2'>Last Hour</span>{' '}
               Average Noise
             </h2>
             <NoiseMeterChart noiseValue={latestNoise.mean} />
-            <p className="text-3xl mb-2">{latestNoise.mean.toFixed(1)} dB</p>
-            <p className="text-sm text-gray-500 mt-5">Last updated</p>
-            <p className="text-md">
+            <p className='text-3xl mb-2'>{latestNoise.mean.toFixed(1)} dB</p>
+            <p className='text-sm text-gray-500 mt-5'>Last updated</p>
+            <p className='text-md'>
               {dayjs(latestNoise.timestamp).format(dateFormat)}
             </p>
           </div>
         </div>
-        <div className="w-2/3 flex justify-between bg-white rounded-xl p-4 shadow-lg mb-5">
-          <div className="w-1/2 p-4">
-            <h2 className="mb-2">
-              <span className="font-medium text-xl mr-1">Last 14 Days</span>{" "}
+        <div className='w-2/3 flex justify-between bg-white rounded-xl p-4 shadow-lg mb-5'>
+          <div className='w-1/2 p-4'>
+            <h2 className='mb-2'>
+              <span className='font-medium text-xl mr-1'>Last 14 Days</span>{' '}
               Average Noise
             </h2>
             <NoiseMeterChart noiseValue={mean7Days} />
-            <p className="text-3xl mb-2">{mean7Days.toFixed(1)} dB</p>
+            <p className='text-3xl mb-2'>{mean7Days.toFixed(1)} dB</p>
           </div>
-          <div className="w-1/2 p-4">
+          <div className='w-1/2 p-4'>
             <h3>
-              <span className="font-medium">Day</span>
+              <span className='font-medium'>Day</span>
               (07:00 - 19:00)
             </h3>
             <NoiseMeterChart noiseValue={mean7DaysDay} showTicks={false} />
-            <p className="text-xl mb-2">{mean7DaysDay.toFixed(1)} dB</p>
+            <p className='text-xl mb-2'>{mean7DaysDay.toFixed(1)} dB</p>
 
             <h3>
-              <span className="font-medium">Evening</span>
+              <span className='font-medium'>Evening</span>
               (19:00 - 23:00)
             </h3>
             <NoiseMeterChart noiseValue={mean7DaysEvening} showTicks={false} />
-            <p className="text-xl mb-2">{mean7DaysEvening.toFixed(1)} dB</p>
+            <p className='text-xl mb-2'>{mean7DaysEvening.toFixed(1)} dB</p>
 
             <h3>
-              <span className="font-medium">Night</span>
+              <span className='font-medium'>Night</span>
               (23:00 - 07:00)
             </h3>
             <NoiseMeterChart noiseValue={mean7DaysNight} showTicks={false} />
-            <p className="text-xl mb-2">{mean7DaysNight.toFixed(1)} dB</p>
+            <p className='text-xl mb-2'>{mean7DaysNight.toFixed(1)} dB</p>
           </div>
         </div>
       </div>
-      <div className="w-full flex">
-        <div className="w-full bg-white rounded-xl p-4 shadow-lg">
-          <div className="w-full p-4">
-            <h2 className="text-xl mb-4">Noise Data</h2>
+      <div className='w-full flex'>
+        <div className='w-full bg-white rounded-xl p-4 shadow-lg'>
+          <div className='w-full p-4'>
+            <h2 className='text-xl mb-4'>Noise Data</h2>
             <NoiseChart measurements={rawNoiseData.measurements} />
-            <button className="mt-1 bg-emerald-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus">
+            <button className='mt-1 bg-emerald-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus'>
               Download as CSV
             </button>
           </div>
@@ -286,7 +282,7 @@ const LocationPage = () => {
 
     const rawNoiseData = (await getLocationNoiseData(parseInt(id), {
       granularity: Granularity.Raw,
-      start: dayjs(lastTimestamp).subtract(3, "days").toISOString(),
+      start: dayjs(lastTimestamp).subtract(3, 'days').toISOString(),
     })) as TimedLocationNoiseData;
 
     setNoiseData(noiseData);
@@ -298,17 +294,17 @@ const LocationPage = () => {
   }, [id]);
 
   return location ? (
-    <div className="h-screen w-screen flex flex-col">
-      <div className="flex justify-center items-center p-8 bg-white">
+    <div className='h-screen w-screen flex flex-col'>
+      <div className='flex justify-center items-center p-8 bg-white'>
         <LocationDetails location={location} />
       </div>
-      <div className="grow flex md:flex-row flex-col justify-around items-center bg-gradient-to-b from-emerald-500 to-gray-100 px-16 py-8">
+      <div className='grow flex md:flex-row flex-col justify-around items-center bg-gradient-to-b from-emerald-500 to-gray-100 px-16 py-8'>
         <MapView location={location} />
         <NoiseData noiseData={noiseData} rawNoiseData={rawNoiseData} />
       </div>
     </div>
   ) : (
-    "Loading..."
+    'Loading...'
   );
 };
 
