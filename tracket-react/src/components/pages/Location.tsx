@@ -291,9 +291,13 @@ const LocationPage = () => {
 
   useEffect(() => {
     fetchLocations();
-  }, [id]);
+  }, [id, fetchLocations]);
 
-  return location ? (
+  return notFound ? (
+    <div className='h-screen w-screen flex justify-center items-center'>
+      <h1>Location not found</h1>
+    </div>
+  ) : location ? (
     <div className='h-screen w-screen flex flex-col'>
       <div className='flex justify-center items-center p-8 bg-white'>
         <LocationDetails location={location} />
