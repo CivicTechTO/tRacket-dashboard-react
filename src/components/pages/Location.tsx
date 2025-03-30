@@ -25,8 +25,6 @@ const dateFormat = 'YYYY-MM-DD HH:mm:ss';
 const makeHue = (noiseValue: number) => {
   const noiseValueScaled = (noiseValue - 35) / 15;
 
-  console.log(noiseValueScaled);
-
   // interpolate between green and red
   const hue = 120 - noiseValueScaled * 80;
   return hue;
@@ -114,8 +112,8 @@ const NoiseChart = ({ measurements }: { measurements: NoiseTimed[] }) => (
         })) || []
       }
       margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-      <Line type='monotone' dataKey='mean' stroke='#8884d8' dot={false} />
-      <Area type='monotone' dataKey='minMax' stroke='#8884d8' fill='#8884d8' />
+      <Line type='monotone' dataKey='mean' stroke='#FB9500' dot={false} />
+      <Area type='monotone' dataKey='minMax' stroke='#FB9500' fill='#FB9500' />
       <CartesianGrid stroke='#ccc' />
       <XAxis
         dataKey='timestamp'
@@ -140,7 +138,9 @@ const NoiseData = ({
 }) => {
   if (!noiseData || !rawNoiseData) {
     return (
-      <div className='w-2/3 flex justify-center items-center'>Loading...</div>
+      <div className='w-2/3 flex justify-center items-center text-xl'>
+        Loading...
+      </div>
     );
   }
 
@@ -184,7 +184,7 @@ const NoiseData = ({
   return (
     <div className='w-2/3 p-4'>
       <div className='w-full flex gap-4'>
-        <div className='w-1/3 flex justify-between bg-white rounded-xl p-4 shadow-lg mb-5'>
+        <div className='w-1/3 flex justify-between bg-background-primary rounded-xl p-4 shadow-lg mb-5'>
           <div className='w-full p-4'>
             <h2>
               <span className='font-medium text-xl mr-2'>Last Hour</span>{' '}
@@ -198,7 +198,7 @@ const NoiseData = ({
             </p>
           </div>
         </div>
-        <div className='w-2/3 flex justify-between bg-white rounded-xl p-4 shadow-lg mb-5'>
+        <div className='w-2/3 flex justify-between bg-background-primary rounded-xl p-4 shadow-lg mb-5'>
           <div className='w-1/2 p-4'>
             <h2 className='mb-2'>
               <span className='font-medium text-xl mr-1'>Last 14 Days</span>{' '}
@@ -232,11 +232,11 @@ const NoiseData = ({
         </div>
       </div>
       <div className='w-full flex'>
-        <div className='w-full bg-white rounded-xl p-4 shadow-lg'>
+        <div className='w-full bg-background-primary rounded-xl p-4 shadow-lg'>
           <div className='w-full p-4'>
             <h2 className='text-xl mb-4'>Noise Data</h2>
             <NoiseChart measurements={rawNoiseData.measurements} />
-            <button className='mt-1 bg-emerald-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus'>
+            <button className='mt-1 bg-honest-eds text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus'>
               Download as CSV
             </button>
           </div>
@@ -299,16 +299,18 @@ const LocationPage = () => {
     </div>
   ) : location ? (
     <div className='h-screen w-screen flex flex-col'>
-      <div className='flex justify-center items-center p-8 bg-white'>
+      <div className='flex justify-center items-center p-8 bg-background-primary'>
         <LocationDetails location={location} />
       </div>
-      <div className='grow flex md:flex-row flex-col justify-around items-center bg-gradient-to-b from-emerald-500 to-gray-100 px-16 py-8'>
+      <div className='grow flex md:flex-row flex-col justify-around items-center bg-honest-eds px-16 py-8'>
         <MapView location={location} />
         <NoiseData noiseData={noiseData} rawNoiseData={rawNoiseData} />
       </div>
     </div>
   ) : (
-    'Loading...'
+    <div className='h-screen w-screen flex justify-center items-center'>
+      <h1>Loading...</h1>
+    </div>
   );
 };
 
