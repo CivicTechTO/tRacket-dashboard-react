@@ -1,0 +1,28 @@
+name: CI tests
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./tracket-react
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18.x"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test with vitest
+        run: npm test
