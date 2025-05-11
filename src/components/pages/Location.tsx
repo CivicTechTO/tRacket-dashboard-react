@@ -65,7 +65,7 @@ const MapView = ({ location }: { location: Location }) => {
       <MapContainer
         style={{ height: '100%', width: '100%', borderRadius: '1rem' }}
         center={[location.latitude, location.longitude]}
-        zoom={20}
+        zoom={16}
         scrollWheelZoom={false}
         dragging={false}>
         <TileLayer url={LAYER_URL} attribution={LAYER_ATTRIBUTION} />
