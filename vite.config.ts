@@ -11,5 +11,5 @@ export default defineConfig({
     // dataLoading tests can take > 5s
     testTimeout: 10_000,
   },
-  base: "/tRacket-dashboard-react/",
+  base: '/tRacket-dashboard-react/',
 });
