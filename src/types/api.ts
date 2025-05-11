@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export type HTTP_METHODS = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export enum Granularity {
@@ -11,9 +13,10 @@ export enum Granularity {
  */
 export type NoiseRequestParams = {
   granularity?: Granularity;
-  start?: string;
-  end?: string;
+  start?: string | dayjs.Dayjs;
+  end?: string | dayjs.Dayjs;
   page?: number;
+  hours?: string;
 };
 
 /**
