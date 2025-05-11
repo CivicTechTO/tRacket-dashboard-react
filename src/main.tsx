@@ -9,7 +9,7 @@ import LocationPage from './components/pages/Location';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='/tRacket-dashboard-react/'>
       <Routes>
         <Route path='/' element={<Map />} />
         <Route path='/location/:id' element={<LocationPage />} />
