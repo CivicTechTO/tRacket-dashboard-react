@@ -22,7 +22,7 @@ interface NoiseSummaryPointData {
 const dateFormat = 'YYYY-MM-DD HH:mm:ss';
 
 const makeHue = (noiseValue: number) => {
-  const noiseValueScaled = (noiseValue - 35) / 15;
+  const noiseValueScaled = (noiseValue - 35) / 24;
 
   // interpolate between green and red
   const hue = 120 - noiseValueScaled * 80;
