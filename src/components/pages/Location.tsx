@@ -12,7 +12,6 @@ import { CheckCircleIcon, NoSymbolIcon } from '@heroicons/react/24/solid';
 import dayjs from 'dayjs';
 import { Circle, MapContainer, TileLayer } from 'react-leaflet';
 import { LAYER_ATTRIBUTION, LAYER_URL } from '../../config';
-// @ts-ignore
 import Plot from 'react-plotly.js';
 
 interface NoiseSummaryPointData {
